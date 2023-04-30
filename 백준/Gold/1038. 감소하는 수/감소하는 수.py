@@ -1,19 +1,27 @@
-# 조합 생성
+# 감소하는 수의 최대 값은 9876543210으로 제한되어 있다.
+# 테스트케이스에서 500000번째로 큰 감소하는 숫자는 없다고 나온다.
+# 따라서 감소하는 숫자를 모두 만들어도 N이 500000 ~ 백만일 때는 무조건 -1을 출력하게된다.
 from itertools import combinations
 
 n = int(input())
 
 # 감소하는 수들의 집합
-nums = list()               # 모든 감소하는 수
-for i in range(1, 11):      #  1~10개의 조합 만들기 (0~9개니깐)
-    for comb in combinations(range(0, 10), i):  # 0~9로 하나씩 조합 만들기
-        comb = list(comb)
-        comb.sort(reverse=True)                     # 해당 조합을 감소하는 수로 변경
-        nums.append(int("".join(map(str, comb))))
+ans = list()
+# 1자리 숫자일 경우 ~ 10자리 숫자일 경우. 모든 경우의 수를 순회한다.
+for i in range(1, 11):     
+    # ex) 1자리 숫자일 경우 0~9를 만들고 2자리 숫자일 경우 01, 02, 03, ..., 12, 13, ..., 78, 79, 89, ..., 0123456789 를 만든다. (튜플로 만듬)
+    for j in combinations(range(0, 10), i): 
+        # 처음에 (0,)이 들어가고 그다음 (1,), (2,), ... (0,1), (0,2) ..., (7,9), (8,9), ..., (0,1,2,3,4,5,6,7,8,9)
+        j = list(j)
+        # 내림차순
+        j.sort(reverse=True)
+        # 문자형->join->정수형
+        ans.append(int("".join(map(str, j))))
+# 오름차순
+ans.sort()   
 
-nums.sort()   # 오름차순
-
+# 테스트케이스처럼 500000번째 수가 없을경우 -1 출력. 마지막 수 9876543210 (몇번째 수인지는 모름)
 try:
-    print(nums[n])
-except:     # 인덱스가 넘어가는 경우 -1 출력. 마지막 수 9876543210
+    print(ans[n])
+except:    
     print(-1)
