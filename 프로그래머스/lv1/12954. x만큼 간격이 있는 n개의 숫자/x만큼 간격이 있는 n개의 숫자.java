@@ -1,9 +1,6 @@
+import java.util.stream.LongStream;
 class Solution {
     public long[] solution(int x, int n) {
-        long[] answer = new long[n];
-        for(int i=0;i<n;i++){
-            answer[i]=((long)x*(i+1));
-        }
-        return answer;
+        return LongStream.iterate(x,i->x+i).limit(n).toArray();
     }
 }
