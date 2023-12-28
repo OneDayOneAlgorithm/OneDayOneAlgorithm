@@ -1,25 +1,26 @@
 import sys
 input = sys.stdin.readline
- 
-t = int(input())
- 
-while t:
-    ans = 999999
-    t -= 1
-    n = int(input())
-    a = list(map(str, input().split()))
-    if n > 32:
+T = int(input())
+for _ in range(T):
+    N = int(input())
+    MBTI = list(input().split())
+    min_cnt = 9999
+    if N > 32:
         print(0)
     else:
-        for i in range(n):
-            for j in range(n):
-                for k in range(n):
-                    tmp = 0
+        for i in range(N):
+            for j in range(i+1,N):
+                for k in range(j+1,N):
+                    cnt = 0
                     if i == j or j == k or i == k:
                         continue
-                    for x in range(4):
-                        if a[i][x] != a[j][x]: tmp += 1
-                        if a[j][x] != a[k][x]: tmp += 1
-                        if a[i][x] != a[k][x]: tmp += 1
-                    ans = min(tmp, ans)
-        print(ans)
+                    for dir in range(4):
+                        if MBTI[i][dir] != MBTI[k][dir]:
+                            cnt += 1
+                        if MBTI[j][dir] != MBTI[k][dir]:
+                            cnt += 1
+                        if MBTI[i][dir] != MBTI[j][dir]:
+                            cnt += 1
+                    if min_cnt > cnt:
+                        min_cnt = cnt
+        print(min_cnt)
